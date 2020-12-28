@@ -37,7 +37,13 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Content;
+        $data->title = $request->title;
+        $data->url = $request->url;
+        $data->save();
+
+        // return response()->json($request->all(), 200); 
+        return $data;
     }
 
     /**
@@ -82,6 +88,7 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delItem = Content::where('id', $id)->delete();
+        return $delItem;
     }
 }

@@ -18,14 +18,19 @@ export default function Content(props) {
     const contentAdd = (item) => {
         props.setContentItemArr([
             ...props.contentItemArr, 
-            {'id': props.contentItemArr.length, ...item}
+            {...item}
         ])
     }
 
     const contentDelete = (event, id) => {
         event.preventDefault()
 
-        props.setContentItemArr(props.contentItemArr.filter(item => item.id !== id))
+        fetch(`/api/content/destroy/${id}`)
+        .then(response => {
+            if(response.ok) {
+                props.setContentItemArr(props.contentItemArr.filter(item => item.id !== id))
+            }
+        }) 
     }
 
     return (

@@ -37527,16 +37527,18 @@ function Content(props) {
 
 
   var contentAdd = function contentAdd(item) {
-    props.setContentItemArr([].concat(_toConsumableArray(props.contentItemArr), [_objectSpread({
-      'id': props.contentItemArr.length
-    }, item)]));
+    props.setContentItemArr([].concat(_toConsumableArray(props.contentItemArr), [_objectSpread({}, item)]));
   };
 
   var contentDelete = function contentDelete(event, id) {
     event.preventDefault();
-    props.setContentItemArr(props.contentItemArr.filter(function (item) {
-      return item.id !== id;
-    }));
+    fetch("/api/content/destroy/".concat(id)).then(function (response) {
+      if (response.ok) {
+        props.setContentItemArr(props.contentItemArr.filter(function (item) {
+          return item.id !== id;
+        }));
+      }
+    });
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -37610,6 +37612,7 @@ var ContentForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      id: '',
       title: '',
       url: ''
     };
@@ -37624,30 +37627,48 @@ var ContentForm = /*#__PURE__*/function (_React$Component) {
       var value = target.value;
       var name = target.name;
       this.setState(_defineProperty({}, name, value));
-      console.log('ff');
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
-      console.log(this.props.addScreen);
+      fetch('/api/content/store', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: this.state.title,
+          url: this.state.url
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this2.setState({
+          id: response.id
+        });
+
+        _this2.props.contentAdd(_this2.state);
+
+        _this2.props.onHide();
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"], {
         onSubmit: function onSubmit(e) {
-          e.preventDefault();
-
-          _this2.props.contentAdd(_this2.state);
-
-          _this2.props.onHide();
+          _this3.handleSubmit(e);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Group, {
         controlId: "formBasicName"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Label, null, "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Control, {
+        value: this.state.title,
         onChange: this.handleInputChange,
         name: "title",
         type: "text",
@@ -37655,6 +37676,7 @@ var ContentForm = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Group, {
         controlId: "formBasicAdres"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Label, null, "\u0410\u0434\u0440\u0435\u0441 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Form__WEBPACK_IMPORTED_MODULE_1__["default"].Control, {
+        value: this.state.url,
         onChange: this.handleInputChange,
         name: "url",
         type: "text",

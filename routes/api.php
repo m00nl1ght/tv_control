@@ -21,5 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/content/store', [ContentController::class, 'store']);
+Route::get('/content/destroy/{id}', [ContentController::class, 'destroy']);
 Route::get('/content', [ContentController::class, 'index']);
 Route::get('/screen', [ScreenController::class, 'index']);
