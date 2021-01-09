@@ -1,29 +1,27 @@
 import React from 'react';
 import MainTableHead from './MainTableHead';
-import MainTableBody from './MainTableBody';
-import MainFormContentSelect from './MainFormContentSelect';
+import MainTableRow from './MainTableRow';
+// import MainFormContentSelect from './MainFormContentSelect';
 
 export default function MainTable(props) {
-    return (
-        
+    return (  
         <table className="table table-hover">
-            
             <MainTableHead />
-            {
-                props.screenItemArr.map(item => {
+
+            <tbody>
+                {props.screenItemArr.map((item, index) => {
                     return (
-                        <MainTableBody
+                        <MainTableRow
                             item = {item}
+                            index = {index}
                             key = {item.id}
-                            mainFormContentSelect = {
-                                <MainFormContentSelect
-                                    url = {item.url}
-                                    contentArr = {props.contentItemArr}
-                                />}
+                            screenUrl = {item.url}
+                            contentArr = {props.contentItemArr}
+                            isLoaded = {props.isLoaded}
                         />
                     )
-                })
-            }
+                })}
+            </tbody>
         </table>
     )
 }

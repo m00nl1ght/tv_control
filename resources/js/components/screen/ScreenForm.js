@@ -7,6 +7,7 @@ export default class ScreenForm extends React.Component {
         super(props);
 
         this.state = {
+            id: '',
             title: '',
             url: '',
             comment: ''
@@ -24,22 +25,37 @@ export default class ScreenForm extends React.Component {
         this.setState({
           [name]: value
         });
-
-        console.log('ff')
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.props.addScreen)
-        
+
+        fetch('/api/screen/store', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: this.state.title,
+                url: this.state.url,
+                comment: this.state.comment
+            })
+        })
+        .then(response => response.json())
+        .then(response => {
+            this.setState({
+                id: response.id
+            })
+            this.props.screenAdd(this.state)
+            this.props.onHide()
+        })   
     }
 
     render() {
         return (
             <Form onSubmit={(e) => {
-                e.preventDefault();
-                this.props.screenAdd(this.state);
-                this.props.onHide();
+                this.handleSubmit(e);
             }}>
                 <Form.Group controlId="formBasicName">
                     <Form.Label>Название</Form.Label>

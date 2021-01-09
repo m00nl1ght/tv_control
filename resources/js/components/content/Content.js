@@ -9,12 +9,6 @@ export default function Content(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // let [contentItemArr, setContentItemArr] = useState([
-    //     { id: 0, title: 'Контент 1', url: '/content1'},
-    //     { id: 1, title: 'Контент 2', url: '/content2'},
-    //     { id: 2, title: 'Контент 3', url: '/content3'}
-    // ]);
-
     const contentAdd = (item) => {
         props.setContentItemArr([
             ...props.contentItemArr, 
@@ -49,14 +43,11 @@ export default function Content(props) {
                 show = {show}
                 contentAdd = {contentAdd}
             />
-
-            <div>
-                <ContentTable 
-                    contentItemArr = {props.contentItemArr}
-                    contentDelete = {contentDelete}
-                />
-            </div>
-
+            
+            <ContentTable 
+                contentItemArr = {props.contentItemArr}
+                contentDelete = {contentDelete}
+            />
         </div>
     )
 }

@@ -14,6 +14,7 @@ export default class Main extends React.Component {
                     <MainTable                                 
                         contentItemArr = {this.props.contentItemArr}
                         screenItemArr = {this.props.screenItemArr}
+                        isLoaded = {this.props.isLoaded}
                     />
                 </div>
 

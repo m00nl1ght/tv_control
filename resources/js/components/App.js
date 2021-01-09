@@ -5,24 +5,16 @@ import {
     Route,
     // Link
   } from "react-router-dom";
+
+//components
 import MainMenu from './menu/MainMenu';
 import Main from './main/Main';
 import Content from './content/Content';
 import Screen from './screen/Screen';
-import Header from './blocks/Header'
-import Footer from './blocks/Footer'
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
 
 export default function App() {
-    const menuItems = [
-        { id: 1, checked: true, title: 'Главная', url: '/' },
-        { id: 2, checked: false, title: 'Добавить URL', url: '/content' },
-        { id: 3, checked: false, title: 'Добавить экран', url: '/screen' },
-    ];
-    // let [screenItemArr, setScreenItemArr] = useState([
-    //     { id: 0, title: 'Экран 1', url: '/screen_1', comment: ''},
-    //     { id: 1, title: 'Экран 2', url: '/screen_2', comment: ''},
-    //     { id: 2, title: 'Экран 3', url: '/screen_3', comment: ''}
-    // ]);
     const [screenItemArr, setScreenItemArr] = useState([]);
 
     useEffect(() => {
@@ -30,23 +22,17 @@ export default function App() {
           .then(res => res.json())
           .then(
             (result) => {
-              setIsLoaded(true);
               setScreenItemArr(result);
             },
             (error) => {
-              setIsLoaded(true);
-              setError(error);
+              // setIsLoaded(true);
+              // setError(error);
             }
           )
     }, []);
 
-    // let [contentItemArr, setContentItemArr] = useState([
-    //     { id: 0, title: 'Контент 1', url: '/content1'},
-    //     { id: 1, title: 'Контент 2', url: '/content2'},
-    //     { id: 2, title: 'Контент 3', url: '/content3'}
-    // ]);
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+    // const [error, setError] = useState(null);
+    const [isLoadedContent, setIsLoadedContent] = useState(false);
     const [contentItemArr, setContentItemArr] = useState([]);
 
     useEffect(() => {
@@ -54,51 +40,51 @@ export default function App() {
           .then(res => res.json())
           .then(
             (result) => {
-              setIsLoaded(true);
+              setIsLoadedContent(true);
               setContentItemArr(result);
             },
             (error) => {
-              setIsLoaded(true);
-              setError(error);
+              // setIsLoaded(true);
+              // setError(error);
             }
           )
     }, []);
 
     return (
-        <div className='d-flex flex-column min-vh-100'>
-            <Header />
+      <div className='d-flex flex-column min-vh-100'>
+        <Header />
 
-            <Router>
-                <div className='container'>
-                    <MainMenu menuItems = {menuItems} />
+        <Router>
+            <div className='container'>
+                {/* <MainMenu menuItems = {menuItems} /> */}
+                <MainMenu />
+                <Switch>
+                    <Route path="/content">
+                        <Content 
+                            contentItemArr = {contentItemArr}
+                            setContentItemArr = {setContentItemArr}
+                        />
+                    </Route>
 
-                    <Switch>
-                        <Route path="/content">
-                            <Content 
-                                contentItemArr = {contentItemArr}
-                                setContentItemArr = {setContentItemArr}
-                            />
-                        </Route>
+                    <Route path="/screen">
+                        <Screen 
+                            screenItemArr = {screenItemArr}
+                            setScreenItemArr = {setScreenItemArr}
+                        />
+                    </Route>
 
-                        <Route path="/screen">
-                            <Screen 
-                                screenItemArr = {screenItemArr}
-                                setScreenItemArr = {setScreenItemArr}
-                            />
-                        </Route>
+                    <Route path="/">
+                        <Main  
+                            contentItemArr = {contentItemArr}
+                            screenItemArr = {screenItemArr}
+                            isLoaded = {isLoadedContent}
+                        />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
 
-                        <Route path="/">
-                            <Main  
-                                contentItemArr = {contentItemArr}
-                                screenItemArr = {screenItemArr}
-                            />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-
-            <Footer />
-        </div> 
-
+        <Footer />
+      </div> 
     );
   }

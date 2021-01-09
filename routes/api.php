@@ -21,7 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/test', [ScreenController::class, 'test']);
+
 Route::post('/content/store', [ContentController::class, 'store']);
 Route::get('/content/destroy/{id}', [ContentController::class, 'destroy']);
 Route::get('/content', [ContentController::class, 'index']);
+
+Route::post('/screen/store', [ScreenController::class, 'store']);
+Route::get('/screen/destroy/{id}', [ScreenController::class, 'destroy']);
 Route::get('/screen', [ScreenController::class, 'index']);

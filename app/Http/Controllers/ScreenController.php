@@ -37,7 +37,13 @@ class ScreenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Screen;
+        $data->title = $request->title;
+        $data->url = $request->url;
+        $data->comment = $request->comment;
+        $data->save();
+
+        return $data;
     }
 
     /**
@@ -82,6 +88,11 @@ class ScreenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delItem = Screen::where('id', $id)->delete();
+        return $delItem;
+    }
+
+    public function test(Request $request) {
+        return ['url' => 'url_3'];
     }
 }

@@ -19,14 +19,19 @@ export default function Screen(props) {
     const screenAdd = (item) => {
         props.setScreenItemArr([
             ...props.screenItemArr, 
-            {'id': props.screenItemArr.length, ...item}
+            {...item}
         ])
     }
 
     const screenDelete = (event, id) => {
         event.preventDefault()
 
-        props.setScreenItemArr(props.screenItemArr.filter(item => item.id !== id))
+        fetch(`/api/screen/destroy/${id}`)
+        .then(response => {
+            if(response.ok) {
+                props.setScreenItemArr(props.screenItemArr.filter(item => item.id !== id))
+            }
+        })  
     }
 
     return (

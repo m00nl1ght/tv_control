@@ -42,7 +42,6 @@ class ContentController extends Controller
         $data->url = $request->url;
         $data->save();
 
-        // return response()->json($request->all(), 200); 
         return $data;
     }
 
