@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ScreenController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
 Route::post('/test', [ScreenController::class, 'test']);
+Route::get('/test', [ScreenController::class, 'test']);
 
 Route::post('/content/store', [ContentController::class, 'store']);
 Route::get('/content/destroy/{id}', [ContentController::class, 'destroy']);

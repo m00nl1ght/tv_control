@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/content', 'index');
-Route::view('/screen', 'index');
+Route::view('/screens', 'screens');
 
 Route::view('/', 'index');

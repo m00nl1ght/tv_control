@@ -93,6 +93,6 @@ class ScreenController extends Controller
     }
 
     public function test(Request $request) {
-        return ['url' => 'url_3'];
+        return json_encode("sadasf");
     }
 }
