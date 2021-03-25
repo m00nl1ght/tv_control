@@ -76,7 +76,13 @@ class ContentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $editItem = Content::where('id', $id)->first();
+
+        $editItem->title = $request->title;
+        $editItem->url = $request->url;
+        $editItem->save();
+
+        return $editItem;
     }
 
     /**
