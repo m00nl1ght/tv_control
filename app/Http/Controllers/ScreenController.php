@@ -77,7 +77,14 @@ class ScreenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $editItem = Screen::where('id', $id)->first();
+
+        $editItem->title = $request->title;
+        $editItem->url = $request->url;
+        $editItem->comment = $request->comment;
+        $editItem->save();
+
+        return $editItem;
     }
 
     /**

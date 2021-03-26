@@ -36,3 +36,4 @@ Route::put('/content/{id}', [ContentController::class, 'update']);
 Route::post('/screen/store', [ScreenController::class, 'store']);
 Route::get('/screen/destroy/{id}', [ScreenController::class, 'destroy']);
 Route::get('/screen', [ScreenController::class, 'index']);
+Route::put('/screen/{id}', [ScreenController::class, 'update']);
